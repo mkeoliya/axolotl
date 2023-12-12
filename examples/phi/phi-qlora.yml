@@ -46,9 +46,9 @@ learning_rate: 0.000003
 
 train_on_inputs: false
 group_by_length: true
-bf16: true
-fp16: false
-tf32: true
+bf16: false
+fp16: true
+tf32: false
 
 gradient_checkpointing:
 early_stopping_patience:
@@ -56,7 +56,7 @@ resume_from_checkpoint:
 local_rank:
 logging_steps: 1
 xformers_attention:
-flash_attention:
+flash_attention: false
 
 warmup_steps: 100
 eval_steps: 0.05

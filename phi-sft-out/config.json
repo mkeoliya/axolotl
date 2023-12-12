@@ -1,0 +1,44 @@
+{
+  "_name_or_path": "microsoft/phi-1_5",
+  "activation_function": "gelu_new",
+  "architectures": [
+    "PhiForCausalLM"
+  ],
+  "attn_pdrop": 0.0,
+  "auto_map": {
+    "AutoConfig": "microsoft/phi-1_5--configuration_phi.PhiConfig",
+    "AutoModelForCausalLM": "microsoft/phi-1_5--modeling_phi.PhiForCausalLM"
+  },
+  "embd_pdrop": 0.0,
+  "flash_attn": false,
+  "flash_rotary": false,
+  "fused_dense": false,
+  "initializer_range": 0.02,
+  "layer_norm_epsilon": 1e-05,
+  "model_type": "phi",
+  "n_embd": 2048,
+  "n_head": 32,
+  "n_head_kv": null,
+  "n_inner": null,
+  "n_layer": 24,
+  "n_positions": 2048,
+  "quantization_config": {
+    "bnb_4bit_compute_dtype": "float16",
+    "bnb_4bit_quant_type": "nf4",
+    "bnb_4bit_use_double_quant": true,
+    "llm_int8_enable_fp32_cpu_offload": false,
+    "llm_int8_has_fp16_weight": false,
+    "llm_int8_skip_modules": null,
+    "llm_int8_threshold": 6.0,
+    "load_in_4bit": true,
+    "load_in_8bit": false,
+    "quant_method": "bitsandbytes"
+  },
+  "resid_pdrop": 0.0,
+  "rotary_dim": 32,
+  "tie_word_embeddings": false,
+  "torch_dtype": "float16",
+  "transformers_version": "4.36.0.dev0",
+  "use_cache": false,
+  "vocab_size": 51200
+}

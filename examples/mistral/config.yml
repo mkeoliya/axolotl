@@ -13,8 +13,9 @@ datasets:
 dataset_prepared_path:
 val_set_size: 0.05
 output_dir: ./out
+eval_sample_packing: False
 
-sequence_len: 8192
+sequence_len: 256 # changed
 sample_packing: true
 pad_to_sequence_len: true
 
@@ -33,7 +34,7 @@ learning_rate: 0.000005
 
 train_on_inputs: false
 group_by_length: false
-bf16: true
+bf16: false
 fp16: false
 tf32: false
 
