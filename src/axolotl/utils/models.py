@@ -284,6 +284,7 @@ def load_model(
 
     model_kwargs["device_map"] = cfg.device_map
     model_kwargs["max_memory"] = cfg.max_memory
+    print("torch dtype:", cfg.torch_dtype)
     model_kwargs["torch_dtype"] = cfg.torch_dtype
 
     if cfg.model_revision:
@@ -517,7 +518,7 @@ def load_model(
 
     if (cfg.adapter == "lora" and load_in_8bit) or (
         cfg.adapter == "qlora" and cfg.load_in_4bit
-    ):
+    ) or (cfg.adapter == "ia3" and cfg.load_in_8bit):
         LOG.info("converting PEFT model w/ prepare_model_for_kbit_training")
         if cfg.gradient_checkpointing:
             model.gradient_checkpointing_enable()
@@ -577,6 +578,8 @@ def load_adapter(model, cfg, adapter, inference=False):
         return load_lora(model, cfg, inference=inference)
     if adapter == "llama-adapter":
         return load_llama_adapter(model, cfg)
+    if adapter == "ia3":
+        return load_ia3(model, cfg, inference=inference)
 
     raise NotImplementedError(f"{adapter} peft adapter not available")
 
@@ -660,3 +663,39 @@ def load_lora(model, cfg, inference=False):
     model.print_trainable_parameters()
 
     return model, lora_config
+
+def load_ia3(model, cfg, inference=False):
+    # type: (PreTrainedModel, DictDefault, bool) -> Tuple[PreTrainedModel, Optional[PeftConfig]]
+
+    from peft import IA3Config, PeftModel, get_peft_model
+
+    lora_target_modules = list(cfg.lora_target_modules or [])
+
+    if cfg.lora_target_linear:
+        linear_names = find_all_linear_names(model)
+        LOG.info(f"found linear modules: {repr(linear_names)}")
+        lora_target_modules = list(set(lora_target_modules + linear_names))
+
+    ia3config = IA3Config(
+        peft_type="IA3",
+        task_type="CAUSAL_LM",
+        target_modules=lora_target_modules,
+        fan_in_fan_out=cfg.lora_fan_in_fan_out,
+        modules_to_save=cfg.lora_modules_to_save if cfg.lora_modules_to_save else None,
+    )
+
+    if cfg.lora_model_dir:
+        LOG.debug("Loading pretained PEFT - LoRA")
+        model = PeftModel.from_pretrained(
+            model,
+            cfg.lora_model_dir,
+            is_trainable=(not inference),
+        )
+    else:
+        model = get_peft_model(model, ia3config)
+    
+    model.to(cfg.torch_dtype)
+
+    model.print_trainable_parameters()
+
+    return model, ia3config
