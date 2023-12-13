@@ -1,6 +1,12 @@
 **/axolotl.egg-info
 configs
 
+# Models
+lora-alpaca-pythia/
+lora-out/
+phi-sft-out
+out/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
