@@ -6,6 +6,7 @@ lora-alpaca-pythia/
 lora-out/
 phi-sft-out
 out/
+last_run_prepared
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
