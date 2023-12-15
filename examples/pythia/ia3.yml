@@ -16,7 +16,7 @@ lora_dropout: 0.05
 lora_target_modules:
   - query_key_value
 lora_target_linear:
-lora_fan_in_fan_out: true  # pythia/GPTNeoX lora specific
+lora_fan_in_fan_out: false  # pythia/GPTNeoX lora specific
 wandb_project:
 wandb_entity:
 wandb_watch:
@@ -26,7 +26,7 @@ output_dir: ./ia3-alpaca-pythia
 gradient_accumulation_steps: 1
 micro_batch_size: 4
 num_epochs: 4
-learning_rate: 3e-4
+learning_rate: 3e-3
 train_on_inputs: false
 group_by_length: false
 bf16: false

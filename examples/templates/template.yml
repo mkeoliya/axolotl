@@ -1,0 +1,60 @@
+# Model & Quantization
+base_model: EleutherAI/pythia-1.4b-deduped
+load_in_8bit: false
+
+# Output Dir
+output_dir: ./ia3-alpaca-pythia
+
+# Datasets
+datasets:
+  - path: gsm8k
+    name: main
+    train_on_split: train
+    type: alpaca_chat.load_qa
+dataset_prepared_path:
+val_set_size: 0.05
+sequence_len: 256
+
+# PEFT Config
+adapter: ia3
+lora_model_dir:
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target_modules:
+  - query_key_value
+lora_target_linear:
+lora_fan_in_fan_out: false  # set true for pythia/GPTNeoX lora specific
+
+# Training Args
+gradient_accumulation_steps: 1
+micro_batch_size: 4
+num_epochs: 4
+learning_rate: 3e-4
+
+# Misc 
+weight_decay: 0.1
+train_on_inputs: false
+group_by_length: false
+early_stopping_patience:
+resume_from_checkpoint:
+local_rank:
+
+# torch dtype
+bf16: false
+fp16: true
+tf32: false
+
+
+# Logging
+eval_steps: 0.05
+save_strategy: epoch
+saves_per_epoch: 1
+logging_steps: 1
+
+# Wandb
+wandb_project:
+wandb_entity:
+wandb_watch:
+wandb_name:
+wandb_log_model:

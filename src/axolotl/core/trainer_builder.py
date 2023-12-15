@@ -761,6 +761,12 @@ class HFCausalTrainerBuilder(TrainerBuilderBase):
         trainer_kwargs, trainer_cls = self.hook_pre_create_trainer(
             trainer_kwargs, trainer_cls
         )
+
+        if self.cfg.train_set_size:
+            train_set_size = min(self.cfg.train_set_size, len(self.train_dataset))
+            self.train_dataset = self.train_dataset.select(range(train_set_size))
+            print("train_set_size", len(self.train_dataset))
+
         trainer = trainer_cls(
             model=self.model,
             train_dataset=self.train_dataset,

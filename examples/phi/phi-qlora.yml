@@ -46,15 +46,9 @@ learning_rate: 0.000003
 
 train_on_inputs: false
 group_by_length: true
-<<<<<<< HEAD
 bf16: false
 fp16: true
 tf32: false
-=======
-bf16: true
-fp16: false
-tf32: true
->>>>>>> 7fabc4d95e9b34e0cfaace2a497cd4fedc43db3b
 
 gradient_checkpointing:
 early_stopping_patience:

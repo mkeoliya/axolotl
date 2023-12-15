@@ -11,11 +11,7 @@ addict
 fire
 PyYAML>=6.0
 datasets>=2.15.0
-<<<<<<< HEAD
 flash-attn==1.0.9
-=======
-flash-attn==2.3.3
->>>>>>> 7fabc4d95e9b34e0cfaace2a497cd4fedc43db3b
 sentencepiece
 wandb
 einops

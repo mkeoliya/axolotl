@@ -515,7 +515,7 @@ def load_model(
         # Qwen doesn't play nicely with LoRA if this is enabled
         skip_prepare_model_for_kbit_training = True
 
-    if (cfg.adapter == "lora" and load_in_8bit) or (
+    if (cfg.adapter == "lora" and cfg.load_in_8bit) or (
         cfg.adapter == "qlora" and cfg.load_in_4bit
     ) or (cfg.adapter == "ia3" and cfg.load_in_8bit):
         LOG.info("converting PEFT model w/ prepare_model_for_kbit_training")

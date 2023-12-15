@@ -558,10 +558,6 @@ def load_prepare_datasets(
     else:
         train_dataset = dataset
         eval_dataset = None
-    
-    if cfg.train_set_size:
-        train_set_size = min(len(train_dataset), cfg.train_set_size)
-        train_dataset = train_dataset.select(range(train_set_size))
 
     return train_dataset, eval_dataset, prompters
 
