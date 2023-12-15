@@ -185,7 +185,6 @@ def load_model(
 
     # TODO refactor as a kwarg
     print("loading in 8bit:", cfg.load_in_8bit)
-    load_in_8bit = cfg.load_in_8bit
 
     if hasattr(model_config, "model_type") and model_config.model_type == "btlm":
         if cfg.flash_attention:
