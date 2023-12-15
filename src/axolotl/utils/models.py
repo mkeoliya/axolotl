@@ -685,7 +685,7 @@ def load_ia3(model, cfg, inference=False):
     )
 
     if cfg.lora_model_dir:
-        LOG.debug("Loading pretained PEFT - LoRA")
+        LOG.debug("Loading pretained PEFT - IA3")
         model = PeftModel.from_pretrained(
             model,
             cfg.lora_model_dir,
