@@ -520,6 +520,7 @@ def load_prepare_datasets(
             num_shards=cfg.dataset_shard_num,
             index=cfg.dataset_shard_idx,
         )
+    
 
     if cfg.val_set_size:
         # ensure we end up with the same fingerprint by doing rank0 first and being able to cache
@@ -557,6 +558,10 @@ def load_prepare_datasets(
     else:
         train_dataset = dataset
         eval_dataset = None
+    
+    if cfg.train_set_size:
+        train_set_size = min(len(train_dataset), cfg.train_set_size)
+        train_dataset = train_dataset.select(range(train_set_size))
 
     return train_dataset, eval_dataset, prompters
 
